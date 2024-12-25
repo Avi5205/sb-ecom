@@ -2,7 +2,7 @@ package in.kodder.service;
 
 import in.kodder.exceptions.APIException;
 import in.kodder.exceptions.ResourceNotFoundException;
-import in.kodder.model.Categories;
+import in.kodder.model.Category;
 import in.kodder.payload.CategoryDTO;
 import in.kodder.payload.CategoryResponse;
 import in.kodder.repository.CategoryRepository;
@@ -34,9 +34,9 @@ public class CategoryServiceImpl implements CategoryService {
                 : Sort.by(sortBy).descending();
 
         Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
-        Page<Categories> categoryPage = categoryRepository.findAll(pageDetails);
+        Page<Category> categoryPage = categoryRepository.findAll(pageDetails);
 
-        List<Categories> categories = categoryPage.getContent();
+        List<Category> categories = categoryPage.getContent();
         if (categories.isEmpty()) {
             throw new APIException("No categories created till now.");
         }
@@ -53,26 +53,26 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
-        Categories category = modelMapper.map(categoryDTO, Categories.class);
-        Categories categoryFromDb = categoryRepository.findByCategoryName(category.getCategoryName());
+        Category category = modelMapper.map(categoryDTO, Category.class);
+        Category categoryFromDb = categoryRepository.findByCategoryName(category.getCategoryName());
         if (categoryFromDb != null) {
             throw new APIException("Category with name " + category.getCategoryName() + " already exists");
         }
-        Categories savedCategory = categoryRepository.save(category);
+        Category savedCategory = categoryRepository.save(category);
         return modelMapper.map(savedCategory, CategoryDTO.class);
     }
 
     @Override
     public CategoryDTO deleteCategory(Long categoryId) {
-        Categories category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("category", "categoryId", categoryId));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("category", "categoryId", categoryId));
         categoryRepository.delete(category);
         return modelMapper.map(category, CategoryDTO.class);
     }
 
     @Override
     public CategoryDTO updateCategory(CategoryDTO categoryDTO, Long categoryId) {
-        Categories savedCategory = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("category", "categoryId", categoryId));
-        Categories category = modelMapper.map(categoryDTO, Categories.class);
+        Category savedCategory = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("category", "categoryId", categoryId));
+        Category category = modelMapper.map(categoryDTO, Category.class);
         category.setCategoryId(categoryId);
         savedCategory = categoryRepository.save(category);
         return modelMapper.map(savedCategory, CategoryDTO.class);
