@@ -1,14 +1,9 @@
 package in.kodder.security;
 
-
-//import com.ecommerce.project.model.AppRole;
-//import com.ecommerce.project.model.Role;
-//import com.ecommerce.project.model.User;
-//import com.ecommerce.project.repositories.RoleRepository;
-//import com.ecommerce.project.repositories.UserRepository;
 import in.kodder.model.AppRole;
 import in.kodder.model.Role;
 import in.kodder.model.User;
+import in.kodder.repository.RoleRepository;
 import in.kodder.repository.UserRepository;
 import in.kodder.security.jwt.AuthEntryPointJwt;
 import in.kodder.security.jwt.AuthTokenFilter;
@@ -19,13 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -33,10 +23,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-//import com.ecommerce.project.security.jwt.AuthEntryPointJwt;
-//import com.ecommerce.project.security.jwt.AuthTokenFilter;
-//import com.ecommerce.project.security.services.UserDetailsServiceImpl;
 
 import java.util.Set;
 
@@ -66,7 +52,6 @@ public class WebSecurityConfig {
         return authProvider;
     }
 
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
@@ -76,7 +61,6 @@ public class WebSecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
 
     @Bean
