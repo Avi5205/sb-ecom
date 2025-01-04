@@ -33,19 +33,15 @@ import java.util.stream.Collectors;
 public class AuthController {
 
     @Autowired
-    private JwtUtils jwtUtils;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
     UserRepository userRepository;
-
     @Autowired
     RoleRepository roleRepository;
-
     @Autowired
     PasswordEncoder encoder;
+    @Autowired
+    private JwtUtils jwtUtils;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
@@ -130,7 +126,7 @@ public class AuthController {
     }
 
     @GetMapping("/username")
-    public String currentUserName(Authentication authentication){
+    public String currentUserName(Authentication authentication) {
         if (authentication != null)
             return authentication.getName();
         else
@@ -138,7 +134,7 @@ public class AuthController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<?> getUserDetails(Authentication authentication){
+    public ResponseEntity<?> getUserDetails(Authentication authentication) {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
         List<String> roles = userDetails.getAuthorities().stream()
@@ -152,7 +148,7 @@ public class AuthController {
     }
 
     @PostMapping("/signout")
-    public ResponseEntity<?> signoutUser(){
+    public ResponseEntity<?> signoutUser() {
         ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,
                         cookie.toString())

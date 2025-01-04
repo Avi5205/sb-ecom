@@ -23,6 +23,7 @@ public class UserInfoResponse {
         this.username = username;
         this.roles = roles;
     }
+}
 
 //    public Long getId() {
 //        return id;
@@ -55,6 +56,6 @@ public class UserInfoResponse {
 //    public void setRoles(List<String> roles) {
 //        this.roles = roles;
 //    }
-}
+//}
 
 
