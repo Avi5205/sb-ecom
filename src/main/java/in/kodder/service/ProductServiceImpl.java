@@ -66,6 +66,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse getAllProducts(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
+        if (pageNumber < 1) {
+            throw new IllegalArgumentException("Page number must be greater than or equal to 1");
+        }
 
         Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc")
                 ? Sort.by(sortBy).ascending()
@@ -89,6 +92,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse searchByCategory(Long categoryId, Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
+        if (pageNumber < 1) {
+            throw new IllegalArgumentException("Page number must be greater than or equal to 1");
+        }
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
 
         Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc")
@@ -117,7 +123,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse searchProductByKeyword(String keyword, Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
-
+        if (pageNumber < 1) {
+            throw new IllegalArgumentException("Page number must be greater than or equal to 1");
+        }
         Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc")
                 ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
